@@ -11,7 +11,6 @@ import java.util.logging.Logger;
 public class ApplicationProperties {
 
     private static ApplicationProperties applicationPropertiesInstance;
-    private final Properties databaseProperties;
     private final Properties clientProperties;
 
     /**
@@ -20,10 +19,8 @@ public class ApplicationProperties {
      * Si no se puede leer el fichero, se muestra un mensaje de error en el log
      */
     private ApplicationProperties() {
-        databaseProperties = new Properties();
         clientProperties = new Properties();
         try {
-            databaseProperties.load(getClass().getClassLoader().getResourceAsStream("database.properties"));
             clientProperties.load(getClass().getClassLoader().getResourceAsStream("client.properties"));
         } catch (IOException ex) {
             Logger.getLogger(getClass().getName()).log(Level.ALL, ex,
@@ -53,7 +50,6 @@ public class ApplicationProperties {
      */
     public String readProperty(PropertyType propertyType, String keyName, String ifNotExistStr) {
         return switch (propertyType) {
-            case DATABASE -> databaseProperties.getProperty(keyName, ifNotExistStr);
             case CLIENT -> clientProperties.getProperty(keyName, ifNotExistStr);
         };
     }
@@ -62,6 +58,6 @@ public class ApplicationProperties {
      * Enum de tipos de propiedades
      */
     public enum PropertyType {
-        DATABASE, CLIENT
+        CLIENT
     }
 }
