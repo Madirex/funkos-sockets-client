@@ -33,7 +33,9 @@ public class LocalDateAdapter extends TypeAdapter<LocalDate> {
      */
     @Override
     public void write(JsonWriter jsonWriter, LocalDate localDate) throws IOException {
-        jsonWriter.value(localDate.toString());
+        if (localDate != null){
+            jsonWriter.value(localDate.toString());
+        }
 
     }
 }
